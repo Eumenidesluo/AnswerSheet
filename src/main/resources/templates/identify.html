@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content="CoreUI - Open Source Bootstrap Admin Template"/>
+    <meta name="author" content="Łukasz Holeczek"/>
+    <meta name="keyword"
+          content="Bootstrap,Admin,Template,Open,Source,AngularJS,Angular,Angular2,jQuery,CSS,HTML,RWD,Dashboard"/>
+    <title>答题卡识别系统</title>
+
+    <!-- Icons -->
+    <link th:href="@{/css/font-awesome.css}" rel="stylesheet"/>
+    <link th:href="@{css/simple-line-icons.css}" rel="stylesheet"/>
+
+    <!-- Main styles for this application -->
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+
+</head>
+
+
+<body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
+<header class="app-header navbar">
+    <button class="navbar-toggler mobile-sidebar-toggler hidden-lg-up" type="button">☰</button>
+    <a class="navbar-brand" href="#"></a>
+    <ul class="nav navbar-nav hidden-md-down">
+        <li class="nav-item">
+            <a class="nav-link navbar-toggler sidebar-toggler" href="#">☰</a>
+        </li>
+    </ul>
+    <ul class="nav navbar-nav ml-auto">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button"
+               aria-haspopup="true" aria-expanded="false">
+                <span class="hidden-md-down">admin</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right">
+
+                <div class="dropdown-header text-center">
+                    <strong>Account</strong>
+                </div>
+
+                <a class="dropdown-item" href="#"><i class="fa fa-bell-o"></i> Updates<span
+                        class="badge badge-info">42</span></a>
+                <a class="dropdown-item" href="#"><i class="fa fa-envelope-o"></i> Messages<span
+                        class="badge badge-success">42</span></a>
+                <a class="dropdown-item" href="#"><i class="fa fa-tasks"></i> Tasks<span
+                        class="badge badge-danger">42</span></a>
+                <a class="dropdown-item" href="#"><i class="fa fa-comments"></i> Comments<span
+                        class="badge badge-warning">42</span></a>
+
+                <div class="dropdown-header text-center">
+                    <strong>Settings</strong>
+                </div>
+
+                <a class="dropdown-item" href="#"><i class="fa fa-user"></i> Profile</a>
+                <a class="dropdown-item" href="#"><i class="fa fa-wrench"></i> Settings</a>
+                <a class="dropdown-item" href="#"><i class="fa fa-usd"></i> Payments<span
+                        class="badge badge-default">42</span></a>
+                <a class="dropdown-item" href="#"><i class="fa fa-file"></i> Projects<span class="badge badge-primary">42</span></a>
+                <div class="divider"></div>
+                <a class="dropdown-item" href="#"><i class="fa fa-shield"></i> Lock Account</a>
+                <a class="dropdown-item" href="#"><i class="fa fa-lock"></i> Logout</a>
+            </div>
+        </li>
+        <li class="nav-item hidden-md-down">
+            <a class="nav-link navbar-toggler aside-menu-toggler" href="#">☰</a>
+        </li>
+
+    </ul>
+</header>
+
+<div class="app-body">
+    <div class="sidebar">
+        <nav class="sidebar-nav">
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="searchPage"><i class="icon-speedometer"></i> 答案广场</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="load"><i class="icon-speedometer"></i> 上传答案</a>
+                </li>
+                <li class="nav-item nav-dropdown">
+                    <a class="nav-link active" href="identifyPage"><i class="icon-star"></i> 识别</a>
+                </li>
+                <li class="nav-item nav-dropdown">
+                    <a class="nav-link" href="historyPage"><i class="icon-star"></i> 识别历史</a>
+                </li>
+                <li class="divider"></li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<!-- Main content -->
+<main class="main">
+    <div id="vue" class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong>提交试卷</strong>
+                        </div>
+                        <div class="card-block">
+                            <form id="form" action="http://localhost:8080/identify" method="post"
+                                  enctype="multipart/form-data"
+                                  class="form-horizontal ">
+                                <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="textId">答案ID</label>
+                                    <div class="col-md-9">
+                                        <input type="text" onblur="detection()" id="textId" name="answerId"
+                                               class="form-control"
+                                               placeholder="Text"/>
+                                        <span class="badge badge-success float-right">{{str}}</span>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="file">答题卡图片</label>
+                                    <div class="col-md-9">
+                                        <input type="file" multiple="multiple" id="file" name="files"/>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <button type="button" onclick="submitAnswer()" class="btn btn-sm btn-primary"><i
+                                            class="fa fa-dot-circle-o"></i>
+                                        Submit
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+                <div v-show="resultId!=''">
+                    <div class="animated fadeIn">
+                        <div class="row">
+                            <template v-for="(resultId,index) in resultId">
+
+                                <div class="col-sm-6 col-md-4">
+                                    <div class="card card card-inverse card-info">
+                                        <div class="card-header">
+                                            准考证号：{{testId[index]}}
+                                        </div>
+                                        <div class="card-block">
+                                            <label>{{answers[index]}}</label>
+                                            <br/>
+                                            <label>错误题号：{{checkout[index]}}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.conainer-fluid -->
+</main>
+
+
+<!-- Bootstrap and necessary plugins -->
+<script th:src="@{/js/jquery-3.2.1.min.js}"></script>
+<script th:src="@{/js/bootstrap.js}"></script>
+<script th:src="@{/js/pace.min.js}"></script>
+
+
+<!-- Plugins and scripts required by all views -->
+<script th:src="@{/js/vue.js}"></script>
+<script th:src="@{/js/identify.js}"></script>
+<!-- GenesisUI main scripts -->
+
+<script th:src="@{/js/app.js}"></script>
+</body>
+
+</html>

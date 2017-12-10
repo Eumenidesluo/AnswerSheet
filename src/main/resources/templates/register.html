@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content="CoreUI Bootstrap 4 Admin Template"/>
+    <meta name="author" content="Lukasz Holeczek"/>
+    <meta name="keyword" content="CoreUI Bootstrap 4 Admin Template"/>
+    <!-- <link rel="shortcut icon" href="assets/ico/favicon.png"> -->
+
+    <title>答题卡识别系统</title>
+
+    <!-- Icons -->
+    <link th:href="@{/css/font-awesome.css}" rel="stylesheet"/>
+    <link th:href="@{css/simple-line-icons.css}" rel="stylesheet"/>
+
+    <!-- Main styles for this application -->
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+
+</head>
+
+<body class="app flex-row align-items-center">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card mx-2">
+                    <div class="card-block p-2">
+                        <h1>注册</h1>
+                        <p class="text-muted">Create your account</p>
+                        <div class="input-group mb-1">
+                            <span class="input-group-addon"><i class="icon-user"></i>
+                            </span>
+                            <input id="username" type="text" class="form-control" placeholder="Username" onblur="checkInput(this)"/>
+                        </div>
+
+                        <div class="input-group mb-1">
+                            <span class="input-group-addon"><i class="icon-lock"></i>
+                            </span>
+                            <input id="password" type="password" class="form-control" placeholder="Password" onblur="checkInput(this)"/>
+                        </div>
+
+                        <div class="input-group mb-2">
+                            <span class="input-group-addon"><i class="icon-lock"></i>
+                            </span>
+                            <input id="repeatPassword" type="password" class="form-control" placeholder="Repeat password" onblur="checkInput(this)"/>
+                        </div>
+
+                        <button onclick="onClickRegister()" type="button" class="btn btn-block btn-success">Create Account</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap and necessary plugins -->
+    <script th:src="@{/js/tether.min.js}"></script>
+    <script th:src="@{/js/jquery-3.2.1.min.js}"></script>
+    <script th:src="@{/js/bootstrap.js}"></script>
+    <script th:src="@{/js/sha256.js}"></script>
+    <script th:src="@{/js/register.js}"></script>
+
+
+</body>
+
+</html>
